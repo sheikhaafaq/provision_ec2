@@ -1,0 +1,29 @@
+---
+# tasks file for provision-ec2
+- name: "Launching three ec2 instance  1 as k8s master node &  2 as K8s slave nodes" 
+  amazon.aws.ec2:
+          key_name: "{{ keypair }}"
+          region: "{{ region }}"
+          instance_type: "{{ instance_type }}"
+          image: "{{ image }}"
+          wait: yes
+          group_id: "{{ security_group_results.group_id }}"
+          vpc_subnet_id: "{{ subnet_result.subnet.id }}"
+          aws_access_key: "{{ aws_access_key }}"
+          aws_secret_key: "{{ aws_secret_key }}"
+          instance_tags:
+                  Name: "{{ item }}"
+  loop:
+          - "k8s_master"
+          - "k8s_slave1"
+          - "k8s_slave2"                  
+
+#----------------------------------------------------------------------------
+#-----------------------------------------------------------------
+
+#Retrive the dynamic Inventory 
+- name: "running dynamic inventory  file"
+  shell: "python3 {{ ec2_py_path }}/ec2.py"
+  register: y
+- debug:
+        var: y.stdout_lines

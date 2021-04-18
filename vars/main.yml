@@ -1,0 +1,10 @@
+---
+# vars file for provision-ec2
+keypair: awskey
+aws_access_key: "AKIARLSHBULWCIVNDWZA"
+aws_secret_key: "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"
+image: ami-0bcf5425cdc1d8a85
+security_group: K8s_cluster
+region: ap-south-1
+instance_type: t2.micro
+ec2_py_path: "/task19/Inventory"
